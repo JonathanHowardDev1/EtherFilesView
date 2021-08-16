@@ -1086,7 +1086,7 @@ export default {
           console.log("Loading begins...");
 
           //var url = 'http://localhost:3000/';
-            var url = 'http://104.238.136.17/',
+            var url = 'http://104.238.136.17/';
           switch(this.fileLoadMethod)
           {
              case "All Files":
