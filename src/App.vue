@@ -296,7 +296,8 @@ export default {
       try{
         axios({
             method: 'post',
-            url: 'http://localhost:3000/Logging',
+            //url: 'http://localhost:3000/Logging',
+            url: 'http://104.238.136.17/Logging',
             data: request
           });      
       }
@@ -322,7 +323,8 @@ export default {
           
           axios({
             method: 'post',
-            url: 'http://localhost:3000/DeleteFile',
+            //url: 'http://localhost:3000/DeleteFile',
+            url: 'http://104.238.136.17/DeleteFile',
             data: request,
             headers: {
                   'Authorization': this.jwtToken,
@@ -368,7 +370,8 @@ export default {
          console.log("FileDownload request...")
           var fileDetailsResponse = await axios({
               method: 'post',
-              url: 'http://localhost:3000/fileDownload',
+              //url: 'http://localhost:3000/fileDownload',
+              url: 'http://104.238.136.17/fileDownload',
               data: request,
               headers: {
                   'Authorization': this.jwtToken,
@@ -396,7 +399,8 @@ export default {
       {
         console.log("onDownloadFile() error: " + exception);
         this.isLoading = false;
-        window.location.href = "http://localhost:8080/";
+        //window.location.href = "http://localhost:8080/";
+        window.location.href = 'http://104.238.136.17/',
         this.Logger("Error", "onDownloadfile() method: " + exception.message);
         
       }
@@ -450,7 +454,8 @@ export default {
         console.log("Uploaded to swarm: " + resphash);
         var response = await axios({
                   method: 'post',
-                  url: 'http://localhost:3000/updateFileHash',
+                  //url: 'http://localhost:3000/updateFileHash',
+                  url: 'http://104.238.136.17/updateFileHash',
                   data: {
                     uploadReq: request
                   },
@@ -568,7 +573,8 @@ export default {
             //var response = await axios.post('http://localhost:3000/fileupload', this.jsonObjRequest);
             var response = await axios({
               method: 'post',
-              url: 'http://localhost:3000/fileupload',
+              //url: 'http://localhost:3000/fileupload',
+              url: 'http://104.238.136.17/fileupload',
               data: {
                 uploadReq: this.jsonObjRequest
               },
@@ -672,7 +678,8 @@ export default {
 
             axios({
               method: 'post',
-              url: 'http://localhost:3000/deleteFiles',
+              //url: 'http://localhost:3000/deleteFiles',
+              url: 'http://104.238.136.17/deleteFiles',
               data: {
                 userAddress: accounts[0]
               },
@@ -695,7 +702,8 @@ export default {
             console.log("Loading begins...");
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveAllDocuments',
+              //url: 'http://localhost:3000/retrieveAllDocuments',
+              url: 'http://104.238.136.17/retrieveAllDocuments',
               data: {
                 userAddress: this.userAddress
               },
@@ -724,7 +732,8 @@ export default {
 
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveAllAudio',
+              //url: 'http://localhost:3000/retrieveAllAudio',
+              url: 'http://104.238.136.17/retrieveAllAudio',
               data: {
                 userAddress: this.userAddress
               },
@@ -757,7 +766,8 @@ export default {
             console.log("Loading begins...");
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveAllVideos',
+              //url: 'http://localhost:3000/retrieveAllVideos',
+              url: 'http://104.238.136.17/retrieveAllVideos',
               data: {
                 userAddress: this.userAddress
               },
@@ -790,7 +800,8 @@ export default {
             console.log("Loading begins...");
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveAllPhotos',
+              //url: 'http://localhost:3000/retrieveAllPhotos',
+              url: 'http://104.238.136.17/retrieveAllPhotos',
               data: {
                 userAddress: this.userAddress
               },
@@ -823,7 +834,8 @@ export default {
             console.log("Loading begins...");
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveRecent',
+              //url: 'http://localhost:3000/retrieveRecent',
+              url: 'http://104.238.136.17/retrieveRecent',
               data: {
                 userAddress: this.userAddress
               },
@@ -978,7 +990,8 @@ export default {
               console.log("Paymede request pending: ")
               axios({
                 method: 'post',
-                url: 'http://localhost:3000/PaymentMade',
+                //url: 'http://localhost:3000/PaymentMade',
+                url: 'http://104.238.136.17/PaymentMade',
                 data: {
                   userAddress: paymentAddress, 
                   epochTime: epochTime,                  
@@ -1043,7 +1056,8 @@ export default {
             console.log("Loading begins...");
             axios({
               method: 'post',
-              url: 'http://localhost:3000/retrieveAll',
+              //url: 'http://localhost:3000/retrieveAll',
+              url: 'http://104.238.136.17/retrieveAll',
               data: {
                 userAddress: this.userAddress
               },
@@ -1071,7 +1085,8 @@ export default {
           this.isLoading = true;
           console.log("Loading begins...");
 
-          var url = 'http://localhost:3000/';
+          //var url = 'http://localhost:3000/';
+            var url = 'http://104.238.136.17/',
           switch(this.fileLoadMethod)
           {
              case "All Files":
@@ -1150,7 +1165,8 @@ export default {
 
           await axios({
             method: 'post',
-            url: 'http://localhost:3000/HandleUserAuthentication', 
+            //url: 'http://localhost:3000/HandleUserAuthentication', 
+            url: 'http://104.238.136.17/HandleUserAuthentication',
             data: {
               address: this.userAddress,
               type: "initializeNonce"
@@ -1185,7 +1201,8 @@ export default {
           {
             await axios({
               method: 'post',
-              url: 'http://localhost:3000/HandleUserAuthentication', 
+              //url: 'http://localhost:3000/HandleUserAuthentication', 
+              url: 'http://104.238.136.17/HandleUserAuthentication',
               data: {
                 address: this.userAddress,
                 type: "processSignedNonce",
@@ -1205,7 +1222,8 @@ export default {
             console.log("Checking user's payment status now... " + this.jwtToken);
             await axios({
                 method: 'post',
-                url: 'http://localhost:3000/HandlePayment',
+                //url: 'http://localhost:3000/HandlePayment',
+                url: 'http://104.238.136.17/HandlePayment',
                 data: {
                   address: this.userAddress,
                   type: "paymentProccess"
