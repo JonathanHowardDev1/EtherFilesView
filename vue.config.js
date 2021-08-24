@@ -4,5 +4,8 @@ module.exports = {
   : '/',
   transpileDependencies: [
     'vuetify'
-  ]
+  ],
+  devServer: {
+    proxy: 'http://104.238.136.17/',
+  }
 }
