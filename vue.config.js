@@ -7,5 +7,6 @@ module.exports = {
   ],
   devServer: {
     proxy: 'http://104.238.136.17/',
+    https: 'true',
   }
 }
