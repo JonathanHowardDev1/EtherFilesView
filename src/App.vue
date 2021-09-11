@@ -293,7 +293,7 @@ export default {
         axios({
             method: 'post',
             //url: 'http://localhost:3000/Logging',
-            url: 'https://104.238.136.17/Logging',
+            url: 'https://server1.ethfiles.com/Logging',
             data: request
           });      
       }
@@ -314,7 +314,7 @@ export default {
           axios({
             method: 'post',
             //url: 'http://localhost:3000/DeleteFile',
-            url: 'https://104.238.136.17/DeleteFile',
+            url: 'https://server1.ethfiles.com/DeleteFile',
             data: request,
             headers: {
                   'Authorization': this.jwtToken,
@@ -355,7 +355,7 @@ export default {
           var fileDetailsResponse = await axios({
               method: 'post',
               //url: 'http://localhost:3000/fileDownload',
-              url: 'https://104.238.136.17/fileDownload',
+              url: 'https://server1.ethfiles.com/fileDownload',
               data: request,
               headers: {
                   'Authorization': this.jwtToken,
@@ -381,7 +381,7 @@ export default {
         console.log("onDownloadFile() error: " + exception);
         this.isLoading = false;
         //window.location.href = "http://localhost:8080/";
-        window.location.href = 'https://104.238.136.17/',
+        window.location.href = 'https://server1.ethfiles.com/',
         this.Logger("Error", "onDownloadfile() method: " + exception.message);
         
       }
@@ -430,7 +430,7 @@ export default {
         var response = await axios({
                   method: 'post',
                   //url: 'http://localhost:3000/updateFileHash',
-                  url: 'https://104.238.136.17/updateFileHash',
+                  url: 'https://server1.ethfiles.com/updateFileHash',
                   data: {
                     uploadReq: request
                   },
@@ -539,7 +539,7 @@ export default {
             var response = await axios({
               method: 'post',
               //url: 'http://localhost:3000/fileupload',
-              url: 'https://104.238.136.17/fileupload',
+              url: 'https://server1.ethfiles.com/fileupload',
               data: {
                 uploadReq: this.jsonObjRequest
               },
@@ -634,7 +634,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/deleteFiles',
-              url: 'https://104.238.136.17/deleteFiles',
+              url: 'https://server1.ethfiles.com/deleteFiles',
               data: {
                 userAddress: accounts[0]
               },
@@ -657,7 +657,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllDocuments',
-              url: 'https://104.238.136.17/retrieveAllDocuments',
+              url: 'https://server1.ethfiles.com/retrieveAllDocuments',
               data: {
                 userAddress: this.userAddress
               },
@@ -684,7 +684,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllAudio',
-              url: 'https://104.238.136.17/retrieveAllAudio',
+              url: 'https://server1.ethfiles.com/retrieveAllAudio',
               data: {
                 userAddress: this.userAddress
               },
@@ -715,7 +715,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllVideos',
-              url: 'https://104.238.136.17/retrieveAllVideos',
+              url: 'https://server1.ethfiles.com/retrieveAllVideos',
               data: {
                 userAddress: this.userAddress
               },
@@ -746,7 +746,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllPhotos',
-              url: 'https://104.238.136.17/retrieveAllPhotos',
+              url: 'https://server1.ethfiles.com/retrieveAllPhotos',
               data: {
                 userAddress: this.userAddress
               },
@@ -776,7 +776,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveRecent',
-              url: 'https://104.238.136.17/retrieveRecent',
+              url: 'https://server1.ethfiles.com/retrieveRecent',
               data: {
                 userAddress: this.userAddress
               },
@@ -925,7 +925,7 @@ export default {
               axios({
                 method: 'post',
                 //url: 'http://localhost:3000/PaymentMade',
-                url: 'https://104.238.136.17/PaymentMade',
+                url: 'https://server1.ethfiles.com/PaymentMade',
                 data: {
                   userAddress: paymentAddress, 
                   epochTime: epochTime,                  
@@ -983,7 +983,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAll',
-              url: 'https://104.238.136.17/retrieveAll',
+              url: 'https://server1.ethfiles.com/retrieveAll',
               data: {
                 userAddress: this.userAddress
               },
@@ -1008,7 +1008,7 @@ export default {
           this.isLoading = true;
           console.log("Loading begins...");
           //var url = 'http://localhost:3000/';
-            var url = 'https://104.238.136.17/';
+            var url = 'https://server1.ethfiles.com/';
           switch(this.fileLoadMethod)
           {
              case "All Files":
@@ -1076,7 +1076,7 @@ export default {
           await axios({
             method: 'post',
             //url: 'http://localhost:3000/HandleUserAuthentication', 
-            url: 'https://104.238.136.17/HandleUserAuthentication',
+            url: 'https://server1.ethfiles.com/HandleUserAuthentication',
             data: {
               address: this.userAddress,
               type: "initializeNonce"
@@ -1110,7 +1110,7 @@ export default {
             await axios({
               method: 'post',
               //url: 'http://localhost:3000/HandleUserAuthentication', 
-              url: 'https://104.238.136.17/HandleUserAuthentication',
+              url: 'https://server1.ethfiles.com/HandleUserAuthentication',
               data: {
                 address: this.userAddress,
                 type: "processSignedNonce",
@@ -1130,7 +1130,7 @@ export default {
             await axios({
                 method: 'post',
                 //url: 'http://localhost:3000/HandlePayment',
-                url: 'https://104.238.136.17/HandlePayment',
+                url: 'https://server1.ethfiles.com/HandlePayment',
                 data: {
                   address: this.userAddress,
                   type: "paymentProccess"
