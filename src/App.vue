@@ -3,12 +3,15 @@
     <v-app-bar
       app      
       flat
+      absolute
     >
       <v-container class="py-0 fill-height">
-        <v-app-bar-title class="text-no-wrap">
-         <v-icon>mdi-cloud-outline</v-icon> EtherCloud
-        </v-app-bar-title>    
-        
+<!--        <v-app-bar-title >  -->
+
+      <div style="font-size: 25px">
+            <v-icon>mdi-cloud-outline</v-icon> EtherCloud
+    <!--        </v-app-bar-title>  -->    
+      </div> 
         <v-spacer></v-spacer>
 
         <v-btn id="btnConnect" v-if="userWalletConnected" disabled >
@@ -278,53 +281,40 @@ import Web3 from 'web3';
 const web3 = new Web3;
 //const web3 = new Web3(window.web3.currentProvider); 
 const bzz = web3.bzz;
-
-
 export default {
   name: 'App',
-
   methods:
   {
     scrollToTop: async function(){
-
     },
-
     logger: async function(logType, logMessage){
-
       var request = {UserAddress: this.userAddress, LogType: logType, LogMessage: logMessage}
-
       try{
         axios({
             method: 'post',
             //url: 'http://localhost:3000/Logging',
-            url: 'http://104.238.136.17/Logging',
+            url: 'https://104.238.136.17/Logging',
             data: request
           });      
       }
-
       catch(exception)
       {
         console.log(exception);
       }
-
     },
-
     url: function(){
       return URL.createObjectURL(this.selectedFile);
     },
-
     onDeleteFile: async function(e) {
-
       try{
         var accounts = await web3.eth.getAccounts();
         var requestAccount = accounts[0];
-
         var request = {address: requestAccount, fileId: e}
           
           axios({
             method: 'post',
             //url: 'http://localhost:3000/DeleteFile',
-            url: 'http://104.238.136.17/DeleteFile',
+            url: 'https://104.238.136.17/DeleteFile',
             data: request,
             headers: {
                   'Authorization': this.jwtToken,
@@ -332,26 +322,21 @@ export default {
           })
           .then(this.loadGrid());      
       }
-
       catch(exception){
         console.log("onDeleteFile() Exception | " + exception);
         this.Logger("Error", "onDeleteFile() method: " + exception.message);
       }
-
     },
     
     onDownloadFile: async function(e) {
-
       console.log("Pressed download");
       try
       {
         this.isLoading = true;
         
         console.log("requestedAccount: " + this.userAddress);
-
         var hashRequest = "";
         const counter = this.fileRows.length - 1;
-
         for (var x = 0; x <= counter; x++)
         {
           if (this.fileRows[x].fileId === e)
@@ -361,7 +346,6 @@ export default {
           }
         } 
         console.log("hashrequest: " + hashRequest);
-
         if (hashRequest)
         {
           var encryptionData = await this.get(hashRequest);
@@ -371,7 +355,7 @@ export default {
           var fileDetailsResponse = await axios({
               method: 'post',
               //url: 'http://localhost:3000/fileDownload',
-              url: 'http://104.238.136.17/fileDownload',
+              url: 'https://104.238.136.17/fileDownload',
               data: request,
               headers: {
                   'Authorization': this.jwtToken,
@@ -386,26 +370,22 @@ export default {
             download.download = respFileName;
             download.click();
           }
-
         }
         else{
          // console.log("Error downloading file");
         }
-
         this.isLoading = false;
       }
-
       catch(exception)
       {
         console.log("onDownloadFile() error: " + exception);
         this.isLoading = false;
         //window.location.href = "http://localhost:8080/";
-        window.location.href = 'http://104.238.136.17/',
+        window.location.href = 'https://104.238.136.17/',
         this.Logger("Error", "onDownloadfile() method: " + exception.message);
         
       }
     },
-
     onFileSelected: async function(e) {
       if (e)
       {
@@ -428,23 +408,18 @@ export default {
         }
       }
     },  
-
     putFileName: async function(fileName){
-
       try
       {
          var resphash = await web3.bzz.upload(fileName.FILE_NAME);
          return resphash;
       }
-
       catch(exception)
       {
         console.log("Error: " + exception);
         this.Logger("Error", "putFileName() method: " + exception.message);
       }
-
     },
-
     put: async function(data) {
       
       try 
@@ -455,7 +430,7 @@ export default {
         var response = await axios({
                   method: 'post',
                   //url: 'http://localhost:3000/updateFileHash',
-                  url: 'http://104.238.136.17/updateFileHash',
+                  url: 'https://104.238.136.17/updateFileHash',
                   data: {
                     uploadReq: request
                   },
@@ -463,7 +438,6 @@ export default {
                       'Authorization': this.jwtToken,
                     }
             });
-
         if (response)
         {
           switch(this.fileLoadMethod)
@@ -471,11 +445,9 @@ export default {
             case "All Files":
               this.loadGrid();
               break;
-
             case "loadRecent":
               this.loadRecent();
               break;
-
             case "Recent Files":
               this.loadAllPhotos();
               break;
@@ -488,7 +460,6 @@ export default {
         {
           console.log("DATA: " + resphash);
         }
-
         if (response) {
           console.log("Updating file hash complete for : " + resphash);
         }
@@ -499,7 +470,6 @@ export default {
         this.Logger("Error", "put() method: " + exception.message);
       } 
     },
-
     getFileName: async function(hash)
     {
       //console.log("getFileName() method :): " + hash);
@@ -513,12 +483,10 @@ export default {
           console.log("Downloaded filename: (response)" + response);
           return response;
         }
-
         else
         {
           console.log("error retriving filename696969 from bzz!!!");
         }
-
       }
       catch (exception) 
       {
@@ -526,7 +494,6 @@ export default {
         this.Logger("Error", "get() method: " + exception.message);
       }
     },
-
     get: async function(hash) {
       console.log("get() method :)...");
       try 
@@ -539,12 +506,10 @@ export default {
           console.log("Downloaded file: (response)" + response);
           return response;
         }
-
         else
         {
           console.log("error retriving data from bzz!!!");
         }
-
       }
       catch (exception) 
       {
@@ -574,7 +539,7 @@ export default {
             var response = await axios({
               method: 'post',
               //url: 'http://localhost:3000/fileupload',
-              url: 'http://104.238.136.17/fileupload',
+              url: 'https://104.238.136.17/fileupload',
               data: {
                 uploadReq: this.jsonObjRequest
               },
@@ -600,9 +565,7 @@ export default {
         alert("Please select a File to Upload");
       }
     },  
-
     setupGrid: async function(response){
-
       try
       {
         var counter = 0;
@@ -619,12 +582,10 @@ export default {
                 category = "mdi-file";
                 //console.log("Document icon...");
                 break;
-
               case 'V':
                 category = "mdi-file-video";
                 //console.log("Video icon...");
                 break;
-
               case 'I':
                 category = "mdi-file-image";
                 //console.log("Image icon...");
@@ -634,13 +595,11 @@ export default {
                 category = "mdi-music-box";
                 //console.log("audio file icon...");
                 break;
-
               default:
                   category = "mdi-file"; 
                   //console.log("Default icon...");
                 break;
             }      
-
             var dateObj = new Date(response.data[item].ADD_TIMESTAMP);
             var formattedDate = dateObj.getMonth() + '-' + dateObj.getDate() + '-' + dateObj.getFullYear();
             //console.log("DateString: " + formattedDate);
@@ -661,7 +620,6 @@ export default {
             }
             counter++;
         }
-
         this.totalFiles = counter;
         this.isLoading = false;  
         
@@ -671,15 +629,12 @@ export default {
         this.Logger("Error", "setupGrid() method: " + exception.message);
       }
     },
-
     deleteData: async function(){
-
         var accounts = await web3.eth.getAccounts();
-
             axios({
               method: 'post',
               //url: 'http://localhost:3000/deleteFiles',
-              url: 'http://104.238.136.17/deleteFiles',
+              url: 'https://104.238.136.17/deleteFiles',
               data: {
                 userAddress: accounts[0]
               },
@@ -689,7 +644,6 @@ export default {
             }).then(x => console.log("Return object :) =>" + x))
           .catch(exception => this.logger("Error", "deleteData() method: " + exception.message));
     },
-
     loadAllDocuments: async function() {
       console.log("loadAllDocuments hit...");
         try
@@ -703,7 +657,7 @@ export default {
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllDocuments',
-              url: 'http://104.238.136.17/retrieveAllDocuments',
+              url: 'https://104.238.136.17/retrieveAllDocuments',
               data: {
                 userAddress: this.userAddress
               },
@@ -712,7 +666,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception)
@@ -721,7 +674,6 @@ export default {
             this.Logger("Error", "loadAllDocuments() method: " + exception.message);
           }
     },
-
     loadAllAudio: async function() {
       console.log("loadAllAudio hit...");
         try
@@ -729,11 +681,10 @@ export default {
             this.fileRows.length = 0;            
             this.fileLoadMethod = "Audio";
             this.isLoading = true;
-
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllAudio',
-              url: 'http://104.238.136.17/retrieveAllAudio',
+              url: 'https://104.238.136.17/retrieveAllAudio',
               data: {
                 userAddress: this.userAddress
               },
@@ -742,7 +693,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception)
@@ -751,7 +701,6 @@ export default {
             this.Logger("Error", "loadAllAudio() method: " + exception.message);
           }
     },
-
     loadAllVideos: async function() {
       console.log("loadAllVideos hit...");
         try
@@ -761,13 +710,12 @@ export default {
             
             //Sets fileLoadMethod
             this.fileLoadMethod = "Videos";
-
             this.isLoading = true;
             console.log("Loading begins...");
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllVideos',
-              url: 'http://104.238.136.17/retrieveAllVideos',
+              url: 'https://104.238.136.17/retrieveAllVideos',
               data: {
                 userAddress: this.userAddress
               },
@@ -776,7 +724,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception)
@@ -785,7 +732,6 @@ export default {
             this.Logger("Error", "loadAllVideos() method: " + exception.message);
           }
     },
-
     loadAllPhotos: async function(){
       console.log("LoadAllPhotos hit...");
         try
@@ -795,13 +741,12 @@ export default {
             
             //Sets fileLoadMethod
             this.fileLoadMethod = "Images";
-
             this.isLoading = true;
             console.log("Loading begins...");
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAllPhotos',
-              url: 'http://104.238.136.17/retrieveAllPhotos',
+              url: 'https://104.238.136.17/retrieveAllPhotos',
               data: {
                 userAddress: this.userAddress
               },
@@ -810,7 +755,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception)
@@ -819,7 +763,6 @@ export default {
             this.Logger("Error", "loadAllPhotos() method: " + exception.message);
           }
     },
-
     loadRecent: async function(){
       try{
             //Clears filerows
@@ -827,15 +770,13 @@ export default {
             
             //Sets fileLoadMethod
             this.fileLoadMethod = "Recent Files";
-
             console.log("LoadRecent hit...");
-
             this.isLoading = true;
             console.log("Loading begins...");
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveRecent',
-              url: 'http://104.238.136.17/retrieveRecent',
+              url: 'https://104.238.136.17/retrieveRecent',
               data: {
                 userAddress: this.userAddress
               },
@@ -844,7 +785,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception){
@@ -852,74 +792,72 @@ export default {
           this.Logger("Error", "loadRecent() method: " + exception.message);
           }
     }, 
-
     makePayment: async function(paymentAmt, isInitialPayment) {
       
       try
       {
        console.log("Received paymentAmt: " + paymentAmt);
         var abi = [
-        {
-          "inputs": [],
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "userAddress",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "uint256",
-              "name": "paymentTimestamp",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "bool",
-              "name": "success",
-              "type": "bool"
-            }
-          ],
-          "name": "PaymentResult",
-          "type": "event"
-        },
-        {
-          "inputs": [],
-          "name": "AdminAddress",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "MakeMonthlyPayment",
-          "outputs": [],
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "PaySetupFee",
-          "outputs": [],
-          "stateMutability": "payable",
-          "type": "function"
-        }
-      ]
-        var smartContractAddress = "0x9EeD4CA0c5dF714D823077C9FaE187b6F02E3F96";
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentTimestamp",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"name": "PaymentResult",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "AdminAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "MakeMonthlyPayment",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PaySetupFee",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
+]
+        var smartContractAddress = "0x0083C5410ae64B15300Dc1CD72D56B817970d0d4";
         var smartContract = new web3.eth.Contract(abi, smartContractAddress);
-
         this.isLoading = true;
         
         var paymentResponse = null;
@@ -944,11 +882,9 @@ export default {
                   
                   else
                     infoText.innerText = "A fee of " + this.nextPaymentAmtEth + " is required to continue use." ;
-
                 }
               });
         }
-
         else
         {
           console.log("MakeMonthlyPayment");
@@ -967,7 +903,6 @@ export default {
                 }
               });
         }        
-
         if (paymentResponse)
         {
           await smartContract.getPastEvents("PaymentResult", {
@@ -977,7 +912,6 @@ export default {
             let epochTime; 
             let paymentAddress;
             let success;
-
             for (let item of events)
             {
               epochTime = item.returnValues.paymentTimestamp;
@@ -991,7 +925,7 @@ export default {
               axios({
                 method: 'post',
                 //url: 'http://localhost:3000/PaymentMade',
-                url: 'http://104.238.136.17/PaymentMade',
+                url: 'https://104.238.136.17/PaymentMade',
                 data: {
                   userAddress: paymentAddress, 
                   epochTime: epochTime,                  
@@ -1009,39 +943,32 @@ export default {
                   this.logger(this.userAddress, "Payment made for " + paymentAmt + " Eth");
                 });
             }
-
             else{
               console.log("An error occurred while making payment")
             }
           }); 
           console.log(paymentResponse);
-
           console.log("Done with payment process");
           this.userPaymentNeeded = false;  
           this.isLoading = false;
         }
-
         else
         {
           console.log("An error has occurred with the payment process... please try again later...");
           this.isLoading = false;
         }        
       }
-
       catch(exception)
       {
         if (exception.includes("denied transaction"))
         {
-
           let infoText = document.getElementById("infoText");
           infoText.innerText = "A fee of " + this.nextPaymentAmtEth + " is required to use with the Account: " + this.userAddress;
         }
         console.log("Error in the makePayment method..." + exception.message);
         this.logger("Error", "MakePayment() method: " + exception.message);
-
       }
     },
-
     loadAllFiles: async function() {
       console.log("loadAllFiles hit...");
         try
@@ -1051,13 +978,12 @@ export default {
             
             //Sets fileLoadMethod
             this.fileLoadMethod = "All Files";
-
             this.isLoading = true;
             console.log("Loading begins...");
             axios({
               method: 'post',
               //url: 'http://localhost:3000/retrieveAll',
-              url: 'http://104.238.136.17/retrieveAll',
+              url: 'https://104.238.136.17/retrieveAll',
               data: {
                 userAddress: this.userAddress
               },
@@ -1066,7 +992,6 @@ export default {
                 }
             }).then(x => this.setupGrid(x))
                 .catch(x => console.log("Error loading grid..." + x));
-
             console.log("User success login!");
           }
           catch(exception)
@@ -1075,24 +1000,20 @@ export default {
             this.Logger("Error", "loadAllFiles() method: " + exception.message);
           }
     },
-
     loadGrid: async function() {
       try{
           //Clears filerows
           this.fileRows.length = 0;
-
           //API Call Begin
           this.isLoading = true;
           console.log("Loading begins...");
-
           //var url = 'http://localhost:3000/';
-            var url = 'http://104.238.136.17/';
+            var url = 'https://104.238.136.17/';
           switch(this.fileLoadMethod)
           {
              case "All Files":
                url = url + 'retrieveAll';
                break;
-
              case "Photos":
                url = url + 'retrieveAllPhotos';
                break;
@@ -1100,16 +1021,13 @@ export default {
              case "Audio":
                url = url + 'retrieveAllAudio';
                break;
-
              case "Videos":
                url = url + 'retrieveAllVideos';
                break;
-
              case "Documents":
                url = url + 'retrieveAllDocuments';
                break;
           }
-
           axios({
             method: 'post',
             url: url,
@@ -1129,9 +1047,7 @@ export default {
           this.Logger("Error", "LoadGrid() method: " + exception.message);
         }
     },
-
     getAccount: async function () {
-
       try
       {       
         this.initialSetup();
@@ -1141,9 +1057,7 @@ export default {
         console.log(exception);
       }
     },
-
     initialSetup: async function () {     
-
       if (window.ethereum)
       {
         console.log('ethereum detected');
@@ -1151,22 +1065,18 @@ export default {
         {
           await window.ethereum.request({ method: 'eth_requestAccounts' });
           var accounts = await web3.eth.getAccounts();
-
           this.userAddress = accounts[0];
           //this.userWalletConnected = true;
-
           console.log("Signing begins..." + this.userAddress);
-
           //Retrieve/Sign Nonce 
           let signature;
           let nonce;
           let hash;
           let msg;
-
           await axios({
             method: 'post',
             //url: 'http://localhost:3000/HandleUserAuthentication', 
-            url: 'http://104.238.136.17/HandleUserAuthentication',
+            url: 'https://104.238.136.17/HandleUserAuthentication',
             data: {
               address: this.userAddress,
               type: "initializeNonce"
@@ -1175,14 +1085,12 @@ export default {
             console.log("Returned nonce value: " + response.data.nonce);
             nonce = response.data.nonce;                  
           });
-
           //Create Signature
           if (nonce)
           {
             msg = nonce.toString();
             hash = web3.utils.sha3(msg);
             var infoText = document.getElementById("infoText");
-
             signature = await web3.eth.sign(hash, this.userAddress, (err, res) => {
               if (err)
               {               
@@ -1202,7 +1110,7 @@ export default {
             await axios({
               method: 'post',
               //url: 'http://localhost:3000/HandleUserAuthentication', 
-              url: 'http://104.238.136.17/HandleUserAuthentication',
+              url: 'https://104.238.136.17/HandleUserAuthentication',
               data: {
                 address: this.userAddress,
                 type: "processSignedNonce",
@@ -1216,14 +1124,13 @@ export default {
               this.jwtToken = response.data.jwtToken;
             });
           }
-
           if (this.jwtToken)
           {
             console.log("Checking user's payment status now... " + this.jwtToken);
             await axios({
                 method: 'post',
                 //url: 'http://localhost:3000/HandlePayment',
-                url: 'http://104.238.136.17/HandlePayment',
+                url: 'https://104.238.136.17/HandlePayment',
                 data: {
                   address: this.userAddress,
                   type: "paymentProccess"
@@ -1261,20 +1168,17 @@ export default {
           this.Logger("Error", "initialSetup() method: " + exception.message);
         }
       }
-
       else if (window.web3)
       {
         alert('legacy dapp browser detected');
         window.web3 = new Web3(web3.currentProvider);
       }
-
       else
       {
         //confirm('non eth-browser detected; need to download metamask');
       }
     },  
   },
-
   mounted () {
     
     if (window.ethereum) 
@@ -1284,7 +1188,6 @@ export default {
         window.location.reload();
       });
     }
-
     if (typeof window.ethereum !== "undefined")
     {
       web3.eth.setProvider(window.web3.currentProvider);
@@ -1295,7 +1198,6 @@ export default {
       //Set the information text
       var infoText = document.getElementById("infoText");
       infoText.innerText = "Please download Metamask to use EtherCloud";
-
       //Set click event to redirect to metamask login
       var connectBtn = document.getElementById("btnConnect");
       connectBtn.innerText = "Download MetaMask"
@@ -1305,7 +1207,6 @@ export default {
       });      
     }
   },
-
   data: () => ({
     dialog: false,
     userAddress: "Please connect to MetaMask to begin storing files",
@@ -1322,7 +1223,6 @@ export default {
     userWalletConnected: false,
     activeNavBtn:2,
     jwtToken: null,
-
     dtoModels:[
       {
         fileName: "",
@@ -1330,7 +1230,6 @@ export default {
         fileCID: ""
       }
     ],
-
     fileRows: [],
     filesTableHeaders: [{
       text: "Name",
@@ -1342,7 +1241,6 @@ export default {
       {text: "FileType", value:"fileType"},
       {text: "Date Added", value: "date"},
       {text: "Actions", value:"", sortable: false}
-
     ],   
   }),
 };
