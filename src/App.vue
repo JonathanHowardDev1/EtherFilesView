@@ -797,7 +797,8 @@ export default {
       try
       {
        console.log("Received paymentAmt: " + paymentAmt);
-        var abi = [
+        var abi = 
+        [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -856,7 +857,7 @@ export default {
 		"type": "function"
 	}
 ]
-        var smartContractAddress = "0x0083C5410ae64B15300Dc1CD72D56B817970d0d4";
+        var smartContractAddress = "0xf089B34BD187aCC23F3FA745b514076C3274abf5";
         var smartContract = new web3.eth.Contract(abi, smartContractAddress);
         this.isLoading = true;
         
