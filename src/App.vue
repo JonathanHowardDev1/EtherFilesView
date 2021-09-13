@@ -9,7 +9,7 @@
 <!--        <v-app-bar-title >  -->
 
       <div style="font-size: 25px">
-            <v-icon>mdi-cloud-outline</v-icon> EtherCloud
+            <v-icon>mdi-cloud-outline</v-icon> EthFiles
     <!--        </v-app-bar-title>  -->    
       </div> 
         <v-spacer></v-spacer>
@@ -281,6 +281,9 @@ import Web3 from 'web3';
 const web3 = new Web3;
 //const web3 = new Web3(window.web3.currentProvider); 
 const bzz = web3.bzz;
+
+document.title = "EthFiles";
+
 export default {
   name: 'App',
   methods:
@@ -1198,7 +1201,7 @@ export default {
     {
       //Set the information text
       var infoText = document.getElementById("infoText");
-      infoText.innerText = "Please download Metamask to use EtherCloud";
+      infoText.innerText = "Please download Metamask to use EthFiles";
       //Set click event to redirect to metamask login
       var connectBtn = document.getElementById("btnConnect");
       connectBtn.innerText = "Download MetaMask"
